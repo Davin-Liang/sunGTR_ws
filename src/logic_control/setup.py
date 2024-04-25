@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "logic_control = logic_control.logic_control:main"
+            "logic_control = logic_control.logic_control:main",
+            "school_race = logic_control.sust_gtr:main"
         ],
     },
 )

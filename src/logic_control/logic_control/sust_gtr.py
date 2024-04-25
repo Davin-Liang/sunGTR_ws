@@ -230,3 +230,21 @@ class Small_SUST_GTR(Node):
                     self.cmd_vel_publisher_.publish(self.twist)
 
 
+def main():
+    rclpy.init()
+    try:
+        node = Small_SUST_GTR("Small_SUST_GTR")
+
+
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if node:
+            node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+
