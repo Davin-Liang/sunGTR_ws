@@ -5,8 +5,8 @@ import cv2
 from sensor_msgs.msg import Image, Imu
 from geometry_msgs.msg import Twist
 from cv_bridge import CvBridge
-from pyzbar.pyzbar import decode
-from origincar_msg.msg import Data
+# from pyzbar.pyzbar import decode
+# from origincar_msg.msg import Data
 from ai_msgs.msg import PerceptionTargets
 import time
 import math
@@ -24,7 +24,7 @@ class SUST_GTR(Node):
 
         self.patrol_result_subscribe_   = self.create_subscription(Bool,    "/patrol_result", self.patrol_result_callback, 10)
         self.image_subscribe_           = self.create_subscription(Image,           "/image", self.image_callback, 10)
-        self.robotpose_subscribe_       = self.create_subscription(Data,        "/robotpose", self.robotpose_callback, 10)
+        # self.robotpose_subscribe_       = self.create_subscription(Data,        "/robotpose", self.robotpose_callback, 10)
         self.imu_subscribe_             = self.create_subscription(Imu,          "/imu/data", self.imu_callback, 10)
         self.patrol_command_publisher   = self.create_publisher(Bool, "patrol_command", 10)
         self.QR_message_publisher       = self.create_publisher(String, "QR_message", 10)
@@ -49,9 +49,9 @@ class SUST_GTR(Node):
         # 将图像转换为灰度
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         # 通过pyzbar解码图像中的二维码
-        decoded_objects = decode(gray)
-        for obj in decoded_objects:
-            self.QR_message.data = obj.data.decode('utf-8')
+        # decoded_objects = decode(gray)
+        # for obj in decoded_objects:
+        #     self.QR_message.data = obj.data.decode('utf-8')
         self.detect_QR = False
 
     def wait_patrol_finish(self):
@@ -103,7 +103,7 @@ class Small_SUST_GTR(Node):
 
         type_central_point = []
         if 0 != len(msg.targets):
-            if msg.targets[0].type == "warning_type":
+            if msg.targets[0].type == "stop":
                 type_central_point.append(msg.targets[0].rois[0].rect.x_offset + msg.targets[0].rois[0].rect.height/2)
                 type_central_point.append(msg.targets[1].rois[1].rect.x_offset + msg.targets[1].rois[1].rect.height/2)
 
