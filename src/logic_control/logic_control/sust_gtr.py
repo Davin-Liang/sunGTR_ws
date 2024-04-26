@@ -81,7 +81,7 @@ class Small_SUST_GTR(Node):
         self.vision_subscribe_ = self.create_subscription(PerceptionTargets, "hobot_dnn_detection", self.vision_callback_, 10)
         self.cmd_vel_publisher_ = self.create_publisher(Twist, "cmd_vel", 10)
         self.parking_begin_publisher_ = self.create_publisher(Bool, "park_begin", 10)
-        self.parking_car_point = [230, 230]
+        self.parking_car_point = [317.0, 161.5]
         self.O_DistanceThreshold = 20
         self.parking_finishing_sign = False
         self.parking_begining_sign = False
