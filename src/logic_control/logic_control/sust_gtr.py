@@ -103,9 +103,10 @@ class Small_SUST_GTR(Node):
 
         type_central_point = []
         if 0 != len(msg.targets):
-            if msg.targets[0].type == "stop":
+            if msg.targets[0].type == "bottle":
                 type_central_point.append(msg.targets[0].rois[0].rect.x_offset + msg.targets[0].rois[0].rect.height/2)
                 type_central_point.append(msg.targets[1].rois[1].rect.x_offset + msg.targets[1].rois[1].rect.height/2)
+                print(type_central_point)
 
     def park_car_judging(self, point):
         if self.calculate_O_distance(point) < self.O_DistanceThreshold:
