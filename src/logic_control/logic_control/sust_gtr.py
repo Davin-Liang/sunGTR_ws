@@ -233,7 +233,7 @@ class Small_SUST_GTR(Node):
 def main():
     rclpy.init()
     try:
-        node = Small_SUST_GTR("Small_SUST_GTR")
+        node = Small_SUST_GTR("Small_SUST_GTR", 2)
 
 
         rclpy.spin(node)
