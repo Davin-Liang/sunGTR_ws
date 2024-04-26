@@ -82,7 +82,7 @@ class Small_SUST_GTR(Node):
         self.cmd_vel_publisher_ = self.create_publisher(Twist, "cmd_vel", 10)
         self.parking_begin_publisher_ = self.create_publisher(Bool, "park_begin", 10)
         self.parking_car_point = [317.0, 161.5]
-        self.O_DistanceThreshold = 20
+        self.O_DistanceThreshold = 64
         self.parking_finishing_sign = False
         self.parking_begining_sign = False
         
@@ -108,8 +108,11 @@ class Small_SUST_GTR(Node):
                 type_central_point.append(msg.targets[0].rois[0].rect.y_offset + msg.targets[0].rois[0].rect.height/2)
                 print(type_central_point)
 
+        self.park_car_judging(type_central_point)
+
     def park_car_judging(self, point):
         if self.calculate_O_distance(point) < self.O_DistanceThreshold:
+            print("开始停车")
             self.parking_begining_sign = True
             # 停车
             self.parking_action()
@@ -164,6 +167,7 @@ class Small_SUST_GTR(Node):
         if self.garage_number == 2:
             while not self.parking_finishing_sign:
                 if time.time()- self.parking_time < self.parking_op_1[self.garage_number]:
+                    print("进行停车的第一阶段")
                     self.twist.linear.x = self.linear_x
                     self.twist.linear.y = 0.0
                     self.twist.linear.z = 0.0
@@ -172,6 +176,7 @@ class Small_SUST_GTR(Node):
                     self.twist.angular.y = 0.0
                     self.cmd_vel_publisher_.publish(self.twist)
                 elif time.time()- self.parking_time >= self.parking_op_1[self.garage_number] and time.time()- self.parking_time < self.parking_op_2[self.garage_number]:
+                    print("进行停车的第二阶段")
                     self.twist.linear.x = self.linear_x
                     self.twist.linear.y = 0.0
                     self.twist.linear.z = 0.0
@@ -180,6 +185,7 @@ class Small_SUST_GTR(Node):
                     self.twist.angular.y = 0.1
                     self.cmd_vel_publisher_.publish(self.twist)
                 elif time.time()- self.parking_time >= self.parking_op_3[self.garage_number] and time.time()- self.parking_time < self.parking_op_3[self.garage_number]:
+                    print("进行停车的第三阶段")
                     self.twist.linear.x = 0.0 
                     self.twist.linear.y = 0.0
                     self.twist.linear.z = 0.0
@@ -188,6 +194,7 @@ class Small_SUST_GTR(Node):
                     self.twist.angular.y = self.angular_z
                     self.cmd_vel_publisher_.publish(self.twist)
                 elif time.time()- self.parking_time >= self.parking_op_3[self.garage_number]:
+                    print("已停好车")
                     self.twist.linear.x = 0.0 
                     self.twist.linear.y = 0.0
                     self.twist.linear.z = 0.0
