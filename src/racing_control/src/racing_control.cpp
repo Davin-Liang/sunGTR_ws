@@ -177,7 +177,7 @@ void RacingControlNode::MessageProcess(){
         if (parking_begin_ == false)
         {
           if ( targets_msg->targets.size() == 0 ) // 如果检测物的数量为 0 ，就进行正常寻线
-            LineFollowing(point_msg);
+            LineFollowing(point_msg->targets[0]);
           else 
           {
             for ( const auto &target : targets_msg->targets )
@@ -187,7 +187,7 @@ void RacingControlNode::MessageProcess(){
                 /* 得到检测框的最大 y 坐标 */
                 int bottom = target.rois[0].rect.y_offset + target.rois[0].rect.height;
                 if ( bottom < bottom_threshold_ )
-                  LineFollowing(point_msg); // 如果小于阈值，就进行正常寻线
+                  LineFollowing(point_msg->targets[0]); // 如果小于阈值，就进行正常寻线
                 else 
                   if ( target.rois[0].confidence > confidence_threshold_ )
                     ObstaclesAvoiding(target);

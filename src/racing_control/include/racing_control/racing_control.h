@@ -23,6 +23,7 @@
 #include "geometry_msgs/msg/point_stamped.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "ai_msgs/msg/perception_targets.hpp"
+#include "ai_msgs/msg/point.hpp"
 
 #include "std_msgs/msg/bool.hpp"
 
